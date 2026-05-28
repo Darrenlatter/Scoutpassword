@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Scout: OSINT & Password Security Academy</title>
+    <title>Cyber Scout: Password Security Academy</title>
     <style>
         :root {
             --scout-purple: #512D6D;
             --scout-green: #006A4E;
-            --dark-bg: #15151a;
-            --card-bg: #22222b;
-            --input-bg: #121216;
+            --dark-bg: #13131a;
+            --card-bg: #1f1f29;
+            --input-bg: #0d0d12;
             --text-light: #f4f4f9;
             --accent-orange: #e65c00;
             --success-green: #2ecc71;
             --fail-red: #e74c3c;
+            --super-cyan: #00d2ff;
         }
 
         body {
@@ -32,23 +33,25 @@
 
         .container {
             width: 100%;
-            max-width: 550px;
+            max-width: 580px;
             background: var(--card-bg);
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             border-top: 6px solid var(--scout-purple);
+            box-sizing: border-box;
         }
 
         .score-badge {
-            background: #333344;
-            padding: 8px 15px;
+            background: #2a2a3a;
+            padding: 8px 18px;
             border-radius: 20px;
             font-weight: bold;
             color: #ffd700;
             display: inline-block;
             margin-bottom: 15px;
             border: 1px solid #444455;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
         h2 {
@@ -64,7 +67,7 @@
             color: #888;
             margin-bottom: 20px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
         }
 
         .form-group {
@@ -107,25 +110,13 @@
             margin-bottom: 10px;
         }
 
-        .btn-primary {
-            background-color: var(--scout-purple);
-            color: white;
-        }
-
+        .btn-primary { background-color: var(--scout-purple); color: white; }
         .btn-primary:hover { background-color: #633985; }
 
-        .btn-secondary {
-            background-color: #3a3a4a;
-            color: #ddd;
-        }
-
+        .btn-secondary { background-color: #3a3a4a; color: #ddd; }
         .btn-secondary:hover { background-color: #4a4a5a; }
 
-        .btn-next {
-            background-color: var(--scout-green);
-            color: white;
-            display: none;
-        }
+        .btn-next { background-color: var(--scout-green); color: white; display: none; }
         .btn-next:hover { background-color: #008462; }
 
         .attempts-box {
@@ -147,18 +138,15 @@
             line-height: 1.4;
         }
 
-        /* Highlighting keywords in the bio */
         .keyword {
             color: #ffcc00;
             font-weight: bold;
             text-decoration: underline dotted;
-            cursor: help;
         }
 
-        /* Educational Panel */
         .lesson-panel {
-            background: #1a2536;
-            border: 1px solid #2b3e5a;
+            background: #152233;
+            border: 1px solid #233954;
             border-radius: 6px;
             padding: 15px;
             margin-top: 20px;
@@ -169,11 +157,8 @@
             color: #5dade2;
             font-weight: bold;
             margin-bottom: 5px;
-            display: flex;
-            align-items: center;
         }
 
-        /* Modal / Popup Styles */
         .modal {
             display: none;
             position: fixed;
@@ -188,10 +173,9 @@
             background: var(--card-bg);
             padding: 25px;
             border-radius: 10px;
-            max-width: 420px;
+            max-width: 440px;
             width: 90%;
             border-left: 5px solid var(--scout-green);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
 
         .close-btn {
@@ -199,7 +183,6 @@
             cursor: pointer;
             font-size: 1.5rem;
             font-weight: bold;
-            line-height: 1;
             color: #aaa;
         }
         .close-btn:hover { color: #fff; }
@@ -211,147 +194,146 @@
         <div class="score-badge">Total Academy Score: <span id="total-score">0</span> pts</div>
     </div>
 
-    <div class="container">
+    <div class="container" id="main-container">
         <h2>OSINT & Password Security Trainer</h2>
-        <div class="system-status" id="profile-status">Loading systems...</div>
+        <div class="system-status" id="profile-status">Initializing Core Modules...</div>
 
+        <!-- Level Selector -->
         <div class="form-group">
-            <label for="difficulty">Select Training Difficulty:</label>
+            <label for="difficulty">Select Training Level:</label>
             <select id="difficulty" onchange="changeDifficulty()">
-                <option value="easy">Easy (Single words, clear personal details)</option>
-                <option value="medium">Medium (Combined words, specific symbols)</option>
-                <option value="hard">Hard (Leetspeak, complex configurations)</option>
+                <option value="easy">Easy (Single words + personal details)</option>
+                <option value="medium">Medium (Combined words + standard symbols)</option>
+                <option value="hard">Hard (Leetspeak character substitution)</option>
+                <option value="super">🔥 Super Complex (The Right Way: Long Passphrases)</option>
             </select>
         </div>
 
         <hr style="border-color: #333; margin: 15px 0;">
 
+        <!-- Fake Login Form -->
         <div class="form-group">
-            <label>Target Account Username</label>
-            <input type="text" id="username" value="" disabled style="color: #888; font-family: monospace;">
+            <label>Target Username</label>
+            <input type="text" id="username" value="" disabled style="color: #777; font-family: monospace;">
         </div>
 
         <div class="form-group">
             <label for="password">Input Password Guess:</label>
-            <input type="text" id="password" placeholder="Analyze the bio and guess..." autocomplete="off">
+            <input type="text" id="password" placeholder="Analyze the dossier and try an exploit..." autocomplete="off">
         </div>
 
         <div class="attempts-box" id="attempts-left">Attempts Remaining: 5</div>
 
         <button class="btn btn-primary" id="submit-btn" onclick="checkPassword()">Submit Exploit Attempt</button>
         <button class="btn btn-secondary" onclick="openModal()">Extract Target Intel (View Bio)</button>
-        <button class="btn btn-next" id="next-btn" onclick="nextAccount()">Next Target Account →</button>
+        <button class="btn btn-next" id="next-btn" onclick="getRandomAccount()">Load Another Random Target →</button>
 
         <div class="feedback-box" id="feedback"></div>
 
+        <!-- Cyber Security Lesson Area -->
         <div class="lesson-panel">
-            <div class="lesson-title">🛡️ Cyber Security Lesson:</div>
+            <div class="lesson-title" id="lesson-title-ui">🛡️ Cyber Security Lesson:</div>
             <div id="lesson-text"></div>
         </div>
     </div>
 
+    <!-- Bio Modal -->
     <div id="bioModal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content" id="modal-border">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h3 style="margin-top: 0; color: var(--scout-green);">Intercepted Personal Dossier</h3>
-            <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 15px;"><em>Hackers look at social media profiles to spot these exact highlighted keywords to guess passwords!</em></p>
+            <h3 style="margin-top: 0; color: var(--scout-green);" id="modal-title">Intercepted Personal Dossier</h3>
+            <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 15px;"><em>Hackers monitor social feeds to extract these exact highlighted elements!</em></p>
             <div id="bio-text" style="line-height: 1.6; font-size: 1rem;"></div>
         </div>
     </div>
 
     <script>
-        // Expanded Database with 3 accounts per level
+        // Massive Database containing 30 accounts total
         const db = {
             easy: {
                 lesson: "<strong>The Danger of Personal Details:</strong> Weak passwords rely on single words, names, or years that can easily be found on a person's social media page (OSINT). Never use your hobbies, pets, or birth years!",
                 accounts: [
-                    {
-                        username: "scout_leader_akela",
-                        password: "Scouting1907",
-                        bio: "<strong>Name:</strong> Akela Smith<br><strong>Favourite Hobby:</strong> They absolutely love <span class='keyword'>Scouting</span>.<br><strong>Fun Fact:</strong> They can tell you the exact <span class='keyword'>1907</span> year that Lord Baden-Powell founded the movement without blinking.",
-                        clues: ["Starts with a Capital letter.", "Combines the hobby and the historic year.", "Format is: [Hobby][Year]."]
-                    },
-                    {
-                        username: "nature_camper_22",
-                        password: "Badger2023",
-                        bio: "<strong>Name:</strong> Patrol Leader Ben<br><strong>Patrol Animal:</strong> He is the leader of the mighty <span class='keyword'>Badger</span> patrol.<br><strong>Memorable Event:</strong> He won his first major camping award in the year <span class='keyword'>2023</span>.",
-                        clues: ["Animal name starts with a Capital letter.", "Combines the patrol animal and the award year.", "Format is: [Patrol][Year]."]
-                    },
-                    {
-                        username: "adventure_kid",
-                        password: "KayakAugust",
-                        bio: "<strong>Name:</strong> Scout Explorer Timmy<br><strong>Favourite Watercraft:</strong> He spends every weekend in his red <span class='keyword'>Kayak</span>.<br><strong>Birth Month:</strong> Timmy was born in the middle of summer, specifically in <span class='keyword'>August</span>.",
-                        clues: ["Both words start with a Capital letter.", "Combines his watercraft and his birth month.", "Format is: [Watercraft][Month]."]
-                    }
+                    { username: "scout_akela", password: "Scouting1907", bio: "<strong>Hobby:</strong> Loves <span class='keyword'>Scouting</span>.<br><strong>History Fact:</strong> Remembers the year <span class='keyword'>1907</span> when the first camp happened.", clues: ["Capitalized hobby first.", "Followed by the 4-digit history year."] },
+                    { username: "nature_camper", password: "Badger2023", bio: "<strong>Patrol:</strong> Leader of the <span class='keyword'>Badger</span> Patrol.<br><strong>Milestone:</strong> Joined leadership in the year <span class='keyword'>2023</span>.", clues: ["Patrol animal is capitalized.", "Followed by the milestone year."] },
+                    { username: "adventure_tim", password: "KayakAugust", bio: "<strong>Boat:</strong> Spends weekends in his <span class='keyword'>Kayak</span>.<br><strong>Birth Month:</strong> Celebrates his birthday in <span class='keyword'>August</span>.", clues: ["Both words are capitalized.", "Format: [Boat][Month]."] },
+                    { username: "climb_guy", password: "Rope101", bio: "<strong>Gear:</strong> Obsessed with checking his climbing <span class='keyword'>Rope</span>.<br><strong>Class:</strong> Teaches basic pioneering course room <span class='keyword'>101</span>.", clues: ["Gear item capitalized.", "Ends with the classroom number."] },
+                    { username: "hiking_phenom", password: "Boots15", bio: "<strong>Footwear:</strong> Wears custom leather <span class='keyword'>Boots</span>.<br><strong>Distance Goal:</strong> Training for a grand <span class='keyword'>15</span> kilometre hike.", clues: ["Footwear item capitalized.", "Ends with the distance target."] },
+                    { username: "map_master", password: "Compass7", bio: "<strong>Navigation:</strong> Always holds a vintage <span class='keyword'>Compass</span>.<br><strong>Lucky Number:</strong> Tells everyone his lucky number is <span class='keyword'>7</span>.", clues: ["Tool item capitalized.", "Ends with the lucky single digit."] },
+                    { username: "chef_cookie", password: "Trangia00", bio: "<strong>Stove Type:</strong> Prefers cooking on a lightweight <span class='keyword'>Trangia</span> burner.<br><strong>License Plate:</strong> His car plate ends in <span class='keyword'>00</span>.", clues: ["Stove brand capitalized.", "Ends with the two zeros."] },
+                    { username: "star_gazer", password: "Orion2026", bio: "<strong>Constellation:</strong> Tracks the position of <span class='keyword'>Orion</span>.<br><strong>Current Project:</strong> Completing a space badge in the current year <span class='keyword'>2026</span>.", clues: ["Constellation capitalized.", "Ends with the current year."] }
                 ]
             },
             medium: {
                 lesson: "<strong>The Danger of Predictable Patterns:</strong> Just joining two common words together with an '&' or adding a '!' at the end is better than 'easy' passwords, but automated hacking tools (dictionaries) crack these in minutes.",
                 accounts: [
-                    {
-                        username: "quartermaster_jones",
-                        password: "Campfire&Marshmallows",
-                        bio: "<strong>Role:</strong> Equipment manager.<br><strong>Night Routine:</strong> Loves setting up a roaring <span class='keyword'>Campfire</span>.<br><strong>Snack Habit:</strong> He never goes camping without roasting sweet <span class='keyword'>Marshmallows</span>. He shortcuts his logs using <span class='keyword'>&</span> instead of 'and'.",
-                        clues: ["Both items capitalized.", "Joined together by the symbol mentioned.", "Format: [FireItem][Symbol][SweetTreatPlural]."]
-                    },
-                    {
-                        username: "hiking_pro_sarah",
-                        password: "Compass!Maps",
-                        bio: "<strong>Bio:</strong> Always navigating.<br><strong>Navigation Gear:</strong> She trusts her physical magnetic <span class='keyword'>Compass</span>.<br><strong>Backup Tool:</strong> She keeps paper <span class='keyword'>Maps</span> in her pack. She separates her item lists with an <span class='keyword'>!</span> exclamation mark.",
-                        clues: ["Both nouns are capitalized.", "Joined together by the punctuation mentioned.", "Format: [Tool1][!][Tool2Plural]."]
-                    },
-                    {
-                        username: "rope_master",
-                        password: "Knots#Splicing",
-                        bio: "<strong>Bio:</strong> Pioneer craft expert.<br><strong>Primary Skill:</strong> Teaches dynamic rope <span class='keyword'>Knots</span>.<br><strong>Advanced Skill:</strong> Masters the art of rope <span class='keyword'>Splicing</span>. Uses the hashtag symbol <span class='keyword'>#</span> to tag things.",
-                        clues: ["Both words are capitalized.", "Joined by the hashtag sign.", "Format: [Skill1Plural][#][Skill2]."]
-                    }
+                    { username: "qm_jones", password: "Campfire&Marshmallows", bio: "<strong>Activity:</strong> Building a <span class='keyword'>Campfire</span>.<br><strong>Snack:</strong> Enjoys roasting <span class='keyword'>Marshmallows</span>.<br><strong>Shortcuts:</strong> Uses the <span class='keyword'>&</span> symbol instead of words.", clues: ["Both items capitalized.", "Joined together by the ampersand symbol."] },
+                    { username: "sarah_nav", password: "Compass!Maps", bio: "<strong>Kit Item 1:</strong> Always packs a <span class='keyword'>Compass</span>.<br><strong>Kit Item 2:</strong> Keeps topographic <span class='keyword'>Maps</span>.<br><strong>Divider:</strong> Separates ideas with an exclamation mark <span class='keyword'>!</span>.", clues: ["Both items capitalized.", "Joined by the exclamation point."] },
+                    { username: "knot_expert", password: "Knots#Splicing", bio: "<strong>Primary Skill:</strong> Teaches rope <span class='keyword'>Knots</span>.<br><strong>Secondary Skill:</strong> Enjoys dynamic <span class='keyword'>Splicing</span>.<br><strong>Tag:</strong> Uses a hashtag symbol <span class='keyword'>#</span> between fields.", clues: ["Both nouns capitalized.", "Joined by the hashtag symbol."] },
+                    { username: "woods_walker", password: "Tents$Tarps", bio: "<strong>Shelter 1:</strong> Packs canvas <span class='keyword'>Tents</span>.<br><strong>Shelter 2:</strong> Carries emergency lightweight <span class='keyword'>Tarps</span>.<br><strong>Character choice:</strong> Uses a dollar sign <span class='keyword'>$</span> as a connector.", clues: ["Both shelters capitalized and plural.", "Connected with the currency symbol."] },
+                    { username: "trail_blazer", password: "Hike+Bike", bio: "<strong>Summer Sport:</strong> Goes for a long <span class='keyword'>Hike</span>.<br><strong>Weekend Sport:</strong> Mountain riding on his <span class='keyword'>Bike</span>.<br><strong>Operator:</strong> Combines them with a plus sign <span class='keyword'>+</span>.", clues: ["Both sports capitalized.", "Connected with the mathematical plus."] },
+                    { username: "river_runner", password: "Canoe%Paddle", bio: "<strong>Craft:</strong> Boards an open-top <span class='keyword'>Canoe</span>.<br><strong>Tool:</strong> Holds a fiberglass <span class='keyword'>Paddle</span>.<br><strong>Math Tweak:</strong> Uses a percent sign <span class='keyword'>%</span> to join items.", clues: ["Both items capitalized.", "Joined together by the percentage symbol."] },
+                    { username: "wild_explorer", password: "Forest?Flora", bio: "<strong>Terrain:</strong> Explores the dense <span class='keyword'>Forest</span>.<br><strong>Study Topic:</strong> Looking at native green <span class='keyword'>Flora</span>.<br><strong>Punctuation:</strong> Links things with a question mark <span class='keyword'>?</span>.", clues: ["Both words capitalized.", "Joined by the question mark."] },
+                    { username: "woodcraft_maker", password: "Axe=Saw", bio: "<strong>Heavy Tool:</strong> Sharpens his chopping <span class='keyword'>Axe</span>.<br><strong>Fine Tool:</strong> Uses a folding hand <span class='keyword'>Saw</span>.<br><strong>Equation:</strong> Equates tools using an equals sign <span class='keyword'>=</span>.", clues: ["Both tools capitalized.", "Connected with the equals operator."] }
                 ]
             },
             hard: {
                 lesson: "<strong>Leetspeak & Character Substitution:</strong> Replacing 'o' with '0' or 'e' with '3' used to look clever, but modern computer hackers already know these substitution algorithms. True strength requires pure randomness and length!",
                 accounts: [
-                    {
-                        username: "explorer_sarah",
-                        password: "3Feathers!W0rld",
-                        bio: "<strong>Emblem Choice:</strong> Proud of the membership badge featuring the <span class='keyword'>3</span> <span class='keyword'>Feathers</span> design.<br><strong>Global Vision:</strong> Dedicated to the <span class='keyword'>World</span> Scout movement. <br><strong>Security Tweak:</strong> Swaps the letter 'o' for a number <span class='keyword'>0 (zero)</span> and links thoughts with a <span class='keyword'>!</span>.",
-                        clues: ["Starts with the number of feathers.", "Followed by the capitalized feather noun, then an exclamation.", "The last word is 'World', but swap the 'o' for a zero."]
-                    },
-                    {
-                        username: "cyber_scouter_dan",
-                        password: "Pr3par3d@100",
-                        bio: "<strong>Motto Focus:</strong> Strictly lives by the Scout motto: Always Be <span class='keyword'>Prepared</span>.<br><strong>Effort Level:</strong> Always gives <span class='keyword'>100</span> percent effort.<br><strong>Habit:</strong> Swaps all 'e' letters for the number <span class='keyword'>3</span>, and uses the <span class='keyword'>@</span> symbol as a connector.",
-                        clues: ["The first word is 'Prepared' (Capitalized P), but replace both 'e's with '3's.", "Followed by the connector symbol.", "Ends with his effort level number."]
-                    },
-                    {
-                        username: "tracker_wolf",
-                        password: "W0lv3s*N1ght",
-                        bio: "<strong>Spirit Animal:</strong> Identifies closely with wild <span class='keyword'>Wolves</span>.<br><strong>Active Hours:</strong> Prefers tracking in the dark of <span class='keyword'>Night</span>.<br><strong>Code Language:</strong> Replaces 'o' with <span class='keyword'>0</span>, replaces 'e' with <span class='keyword'>3</span>, and connects words with a star <span class='keyword'>*</span>.",
-                        clues: ["Word 1: 'Wolves' (Capital W, 'o' becomes '0', 'e' becomes '3').", "Followed by a star.", "Word 2: 'Night' (Capital N, 'i' becomes '1')."]
-                    }
+                    { username: "expl_sarah", password: "3Feathers!W0rld", bio: "<strong>Emblem:</strong> Loves the <span class='keyword'>3</span> <span class='keyword'>Feathers</span> badge.<br><strong>Affiliation:</strong> Part of the global <span class='keyword'>World</span> movement.<br><strong>Code:</strong> Swaps the letter 'o' for a number <span class='keyword'>0</span>, splits with <span class='keyword'>!</span>.", clues: ["Starts with number of feathers, then capitalized noun.", "Separated by exclamation, ending in 'World' with an 0."] },
+                    { username: "cyber_dan", password: "Pr3par3d@100", bio: "<strong>Motto:</strong> Always remain <span class='keyword'>Prepared</span>.<br><strong>Effort:</strong> Gives <span class='keyword'>100</span> percent dedication.<br><strong>Code:</strong> Changes 'e' into <span class='keyword'>3</span>, connects with <span class='keyword'>@</span>.", clues: ["Motto word first (Capital P), but replace both 'e's with '3's.", "Connect with the 'at' sign, finish with the numeric effort."] },
+                    { username: "track_wolf", password: "W0lv3s*N1ght", bio: "<strong>Animal:</strong> Tracks packs of wild <span class='keyword'>Wolves</span>.<br><strong>Preference:</strong> Prefers tracking at <span class='keyword'>Night</span>.<br><strong>Code:</strong> 'o' to <span class='keyword'>0</span>, 'e' to <span class='keyword'>3</span>, 'i' to <span class='keyword'>1</span>, connected with star <span class='keyword'>*</span>.", clues: ["Wolves (Capital W, 'o'->'0', 'e'->'3').", "Connected by star, ending with Night ('i'->'1')."] },
+                    { username: "badge_hunter", password: "Chall3ng3#99", bio: "<strong>Goal:</strong> Completing the ultimate <span class='keyword'>Challenge</span> badge.<br><strong>ID Number:</strong> Box record number <span class='keyword'>99</span>.<br><strong>Code:</strong> Substitutes 'e' with the number <span class='keyword'>3</span>, links with <span class='keyword'>#</span>.", clues: ["Goal word first, swapping 'e's for '3's.", "Followed by hashtag, ending in the ID number."] },
+                    { username: "first_aid_pro", password: "R3scu3!Squad", bio: "<strong>Team Name:</strong> High-speed medical <span class='keyword'>Rescue</span> team.<br><strong>Unit Type:</strong> Operates inside the tactical <span class='keyword'>Squad</span>.<br><strong>Code:</strong> Substitutes 'e' with <span class='keyword'>3</span>, split by <span class='keyword'>!</span>.", clues: ["First word 'Rescue' with 'e's swapped for '3's.", "An exclamation point, then capitalized 'Squad'."] },
+                    { username: "green_leaf", password: "B1rch&W00d", bio: "<strong>Tree Type:</strong> Carves objects from <span class='keyword'>Birch</span>.<br><strong>Material:</strong> Works out in the local <span class='keyword'>Wood</span> lot.<br><strong>Code:</strong> Swaps 'i' with <span class='keyword'>1</span>, 'o' with <span class='keyword'>0</span>, connected by <span class='keyword'>&</span>.", clues: ["Birch first ('i' is '1'), connected by ampersand.", "Wood last (both 'o's become '0's)."] },
+                    { username: "fire_starter", password: "Fl1nt$St33l", bio: "<strong>Rock:</strong> Striking a shard of <span class='keyword'>Flint</span>.<br><strong>Metal:</strong> Scraped against carbon <span class='keyword'>Steel</span>.<br><strong>Code:</strong> 'i' becomes <span class='keyword'>1</span>, 'e' becomes <span class='keyword'>3</span>, connected with <span class='keyword'>$</span>.", clues: ["Flint first ('i' is '1'), dollar sign connector.", "Steel last ('e's become '3's)."] }
+                ]
+            },
+            super: {
+                lesson: "<strong>👑 The Super Complex Standard (Passphrases):</strong> Length wins! Instead of short words with hard-to-remember substitutions, cyber security agencies recommend a <strong>Passphrase</strong>: 3 or 4 completely random, long words joined by spaces. They are incredibly tough for supercomputers to guess, yet easy for you to remember!",
+                accounts: [
+                    { username: "director_safety", password: "Green Dragon Jump Backpack", bio: "<strong>Colour:</strong> Always wears a bright <span class='keyword'>Green</span> uniform jacket.<br><strong>Mythology:</strong> Loves drawing a mythical scaled <span class='keyword'>Dragon</span>.<br><strong>Action:</strong> Tells scouts to safely <span class='keyword'>Jump</span> across streams.<br><strong>Gear Bag:</strong> Packs everything in a canvas <span class='keyword'>Backpack</span>.<br><strong>Structure:</strong> Just four normal words separated by standard spaces!", clues: ["Capitalize the first letter of every single word.", "Separate every single word with a single space.", "Format: Green [Space] Dragon [Space] Jump [Space] Backpack"] },
+                    { username: "chief_instructor", password: "Muddy Compass Lost Tomorrow", bio: "<strong>Ground Status:</strong> The field terrain is incredibly <span class='keyword'>Muddy</span>.<br><strong>Navigation Tool:</strong> Checking a baseplate <span class='keyword'>Compass</span>.<br><strong>Scenario:</strong> Simulating getting completely <span class='keyword'>Lost</span> in the hills.<br><strong>Timeline:</strong> The training starts <span class='keyword'>Tomorrow</span> night.<br><strong>Structure:</strong> Plain text words joined together with spaces.", clues: ["Capitalize every word.", "Use regular spaces to link the four terms.", "Format: Muddy Compass Lost Tomorrow"] },
+                    { username: "gold_awardee", password: "Silver Journey Target Achieved", bio: "<strong>Old Badge:</strong> Reminiscing about their old <span class='keyword'>Silver</span> award.<br><strong>Expedition:</strong> Finished a grueling mountain <span class='keyword'>Journey</span>.<br><strong>Milestone:</strong> Set a strict checkpoint <span class='keyword'>Target</span>.<br><strong>Success Status:</strong> Celebrated because they <span class='keyword'>Achieved</span> the prize.<br><strong>Structure:</strong> Combine the four concepts using basic sentence spaces.", clues: ["Capitalize all four words.", "Link them with simple spaces.", "Format: Silver Journey Target Achieved"] },
+                    { username: "quartermaster_general", password: "Heavy Canvas Frozen Ground", bio: "<strong>Kit Weight:</strong> Carrying a massive <span class='keyword'>Heavy</span> patrol box.<br><strong>Material:</strong> Fixing up the thick <span class='keyword'>Canvas</span> dynamic tents.<br><strong>Weather Condition:</strong> Chilled by the <span class='keyword'>Frozen</span> winter atmosphere.<br><strong>Floor Status:</strong> Hammering pegs directly into the hard <span class='keyword'>Ground</span>.<br><strong>Structure:</strong> A 4-word long passphrase separated by simple spaces.", clues: ["Capitalize all words.", "Join them with single sentence spaces.", "Format: Heavy Canvas Frozen Ground"] },
+                    { username: "expedition_hq", password: "Stormy Valley Signal Broken", bio: "<strong>Weather Report:</strong> Navigating through a wet, <span class='keyword'>Stormy</span> gale.<br><strong>Geography:</strong> Hiking deep down inside a rocky <span class='keyword'>Valley</span>.<br><strong>Radio Status:</strong> Checking the VHF wireless <span class='keyword'>Signal</span> feedback.<br><strong>Tech Problem:</strong> The antenna link is completely <span class='keyword'>Broken</span>.<br><strong>Structure:</strong> Write the 4 capitalized elements using single space gaps.", clues: ["Capitalize each distinct word.", "Separate them using standard space gaps.", "Format: Stormy Valley Signal Broken"] },
+                    { username: "pioneering_legend", password: "Timber Lashings Standard Project", bio: "<strong>Material:</strong> Stacking large pieces of structural <span class='keyword'>Timber</span>.<br><strong>Ropework:</strong> Tying neat square parallel <span class='keyword'>Lashings</span>.<br><strong>Design Guide:</strong> Following the official guide <span class='keyword'>Standard</span> workbook.<br><strong>Activity:</strong> Building a giant gateway tower <span class='keyword'>Project</span>.<br><strong>Structure:</strong> Four capital words connected with simple sentence spaces.", clues: ["Capitalize each of the four building elements.", "Separate words using common spaces.", "Format: Timber Lashings Standard Project"] },
+                    { username: "wild_chef", password: "Smoky Kettle Burning Charcoal", bio: "<strong>Air Quality:</strong> Cooking over a very <span class='keyword'>Smoky</span> open fire pit.<br><strong>Boiler:</strong> Boiling fresh water inside a cast iron <span class='keyword'>Kettle</span>.<br><strong>Fuel State:</strong> Staring at the hot, orange <span class='keyword'>Burning</span> embers.<br><strong>Fuel Type:</strong> Added a fresh sack of lumpwood <span class='keyword'>Charcoal</span>.<br><strong>Structure:</strong> Join the four capitalized cooking terms using regular spaces.", clues: ["Capitalize all four campfire words.", "Link them smoothly using single space characters.", "Format: Smoky Kettle Burning Charcoal"] }
                 ]
             }
         };
 
         let currentLevel = 'easy';
-        let accountIndex = 0;
+        let currentAccount = null;
         let attemptsLeft = 5;
         let score = 0;
         let gameOver = false;
 
         function changeDifficulty() {
             currentLevel = document.getElementById('difficulty').value;
-            accountIndex = 0;
-            initRound();
+            
+            // UI Color theme adjustment for Super Complex level
+            const container = document.getElementById('main-container');
+            if (currentLevel === 'super') {
+                container.style.borderTop = "6px solid var(--super-cyan)";
+                document.getElementById('lesson-title-ui').textContent = "👑 Super Passphrase Security Lesson:";
+            } else {
+                container.style.borderTop = "6px solid var(--scout-purple)";
+                document.getElementById('lesson-title-ui').textContent = "🛡️ Cyber Security Lesson:";
+            }
+            
+            getRandomAccount();
         }
 
-        function initRound() {
+        function getRandomAccount() {
             attemptsLeft = 5;
             gameOver = false;
             
-            const currentAccount = db[currentLevel].accounts[accountIndex];
+            const accountPool = db[currentLevel].accounts;
+            // Select an account randomly from the chosen level pool
+            const randomIndex = Math.floor(Math.random() * accountPool.length);
+            currentAccount = accountPool[randomIndex];
             
-            // Set fields
+            // Reset form fields
             document.getElementById('username').value = currentAccount.username;
             document.getElementById('password').value = '';
             document.getElementById('password').disabled = false;
@@ -361,14 +343,11 @@
             document.getElementById('attempts-left').textContent = `Attempts Remaining: ${attemptsLeft}`;
             document.getElementById('attempts-left').style.color = 'var(--accent-orange)';
             
-            document.getElementById('profile-status').textContent = `Target Profile: ${accountIndex + 1} of 3`;
+            document.getElementById('profile-status').textContent = `Target Level: ${currentLevel.toUpperCase()} (Random Matrix Loaded)`;
+            document.getElementById('feedback').innerHTML = `<strong>System Status:</strong> New random target locked. Analyze their personal dossier to look for password trends!`;
             
-            document.getElementById('feedback').innerHTML = `<strong>System Status:</strong> New target locked. Analyze their personal dossier to find password indicators!`;
-            
-            // Update lesson panel text
+            // Load educational dynamic texts
             document.getElementById('lesson-text').innerHTML = db[currentLevel].lesson;
-            
-            // Populate bio text
             document.getElementById('bio-text').innerHTML = currentAccount.bio;
         }
 
@@ -376,32 +355,29 @@
             if (gameOver) return;
 
             const userGuess = document.getElementById('password').value.trim();
-            const currentAccount = db[currentLevel].accounts[accountIndex];
             const correctPassword = currentAccount.password;
 
             if (userGuess === '') {
-                document.getElementById('feedback').innerHTML = `<strong>System Alert:</strong> You must enter a guess before attacking the password mainframe.`;
+                document.getElementById('feedback').innerHTML = `<strong>System Alert:</strong> Enter an exploit guess before launching the breach script.`;
                 return;
             }
 
             if (userGuess === correctPassword) {
-                // Scoring system: more points for fewer attempts used
-                let pointsEarned = attemptsLeft * 20; 
+                let pointsEarned = attemptsLeft * 25; 
                 score += pointsEarned;
                 document.getElementById('total-score').textContent = score;
 
-                document.getElementById('feedback').innerHTML = `<strong style="color: var(--success-green);">🔓 PROFILE CRACKED! (+${pointsEarned} pts)</strong><br>Excellent scouting! You deduced the password using their profile footprint.`;
-                
+                document.getElementById('feedback').innerHTML = `<strong style="color: var(--success-green);">🔓 ACCESS GRANTED! (+${pointsEarned} pts)</strong><br>Outstanding deduction! You broke the profile footprint.`;
                 endRound(true);
             } else {
                 attemptsLeft--;
                 document.getElementById('attempts-left').textContent = `Attempts Remaining: ${attemptsLeft}`;
                 
                 if (attemptsLeft <= 0) {
-                    document.getElementById('feedback').innerHTML = `<strong style="color: var(--fail-red);">🔒 FIREWALL LOCKOUT! (0 pts)</strong><br>Target changed security configurations. The correct password was: <code>${correctPassword}</code>.`;
+                    document.getElementById('feedback').innerHTML = `<strong style="color: var(--fail-red);">🔒 FIREWALL LOCKOUT! (0 pts)</strong><br>Target network dropped connection. The password was: <code>${correctPassword}</code>.`;
                     endRound(false);
                 } else {
-                    // Pull clue sequentially based on missed attempts
+                    // Match a dynamic clue based on incorrect attempts
                     let clueIdx = 5 - attemptsLeft - 1;
                     let currentClue = currentAccount.clues[clueIdx] || currentAccount.clues[currentAccount.clues.length - 1];
                     
@@ -419,39 +395,28 @@
                 document.getElementById('attempts-left').textContent = "BREACHED";
                 document.getElementById('attempts-left').style.color = "var(--success-green)";
             } else {
-                document.getElementById('attempts-left').textContent = "FAILED";
+                document.getElementById('attempts-left').textContent = "LOCKED";
                 document.getElementById('attempts-left').style.color = "var(--fail-red)";
             }
 
-            // Show "Next Target" button
             document.getElementById('next-btn').style.display = 'block';
-            if (accountIndex === 2) {
-                document.getElementById('next-btn').textContent = "Advance Difficulty Level";
+        }
+
+        // Modal Controls
+        function openModal() {
+            const modalBorder = document.getElementById('modal-border');
+            const modalTitle = document.getElementById('modal-title');
+            
+            if (currentLevel === 'super') {
+                modalBorder.style.borderLeft = "5px solid var(--super-cyan)";
+                modalTitle.style.color = "var(--super-cyan)";
             } else {
-                document.getElementById('next-btn').textContent = "Next Target Account →";
+                modalBorder.style.borderLeft = "5px solid var(--scout-green)";
+                modalTitle.style.color = "var(--scout-green)";
             }
+            document.getElementById('bioModal').style.display = 'flex';
         }
-
-        function nextAccount() {
-            accountIndex++;
-            if (accountIndex > 2) {
-                // Move up difficulty automatically if they finish 3 profiles
-                accountIndex = 0;
-                if (currentLevel === 'easy') {
-                    currentLevel = 'medium';
-                } else if (currentLevel === 'medium') {
-                    currentLevel = 'hard';
-                } else {
-                    alert(`Training Complete! Outstanding work Officer. Final Score: ${score} points!`);
-                    currentLevel = 'easy';
-                }
-                document.getElementById('difficulty').value = currentLevel;
-            }
-            initRound();
-        }
-
-        // Modal Window Scripts
-        function openModal() { document.getElementById('bioModal').style.display = 'flex'; }
+        
         function closeModal() { document.getElementById('bioModal').style.display = 'none'; }
         
         window.onclick = function(event) {
@@ -459,8 +424,8 @@
             if (event.target == modal) modal.style.display = 'none';
         }
 
-        // Boot system up
-        window.onload = initRound;
+        // Fire on system launch
+        window.onload = getRandomAccount;
     </script>
 </body>
 </html>
